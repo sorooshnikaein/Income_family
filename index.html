@@ -363,15 +363,30 @@
     async function add_markers() {
             var values = await fetch("./Population_cities.json")
       var value_data_pop = await values.json()
-      value_data_pop.map((e) => {
+      var markers = value_data_pop.map((e) => {
         var loc = e.Location.split("/ ")[2];
         loc = loc.split("(")[0]
         loc = loc.split("; ")
         var coordinates = [loc[1], loc[0]]
-        console.log(coordinates)
-        var marker = new mapboxgl.Marker().setLngLat(coordinates)
-    .addTo(map);
+        return {"type": "Feature", geometry: {"type": "Point", "coordinates": coordinates}}
       })
+      console.log(markers)
+      map.addSource('shoppingcenter', {
+        'type': 'geojson',
+        'data': {
+        'type': 'FeatureCollection',
+        'features': markers
+        }})
+        map.addLayer({
+        'id': 'shoppingcenter',
+        'type': 'symbol',
+        'source': 'shoppingcenter',
+            'layout': {
+              "icon-image": "marker-15",
+              'icon-size': 1.4,
+              'icon-allow-overlap': true
+            }
+        });
     }
 		add_value()
 
