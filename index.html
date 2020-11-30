@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <title></title>
+    <div class="mapchange"><button onclick="valuechanged()">Botoom Income</button></div>
+    <div class="mapchange2"><button onclick="valuechangedincome()">Expense Income Mortgage</button></div>
+    <div class="mapchange4"><button onclick="valuechangedincome_exp()">Expense Income</button></div>
+    <div class="mapchange3"><button onclick="add_markers()">Markers</button></div>
+    <div class="mapvalue" id="bottom-earners">
+      <div class="image-total">
+        <div style="background: rgba(230,0,0, .95)" class="image-stable"></div><div class="image-text">Above 15%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(230,10,0, .85)" class="image-stable"></div><div class="image-text">10% - 15%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(230,20,0, .75)" class="image-stable"></div><div class="image-text">8% - 10%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(230,35,0, .62)" class="image-stable"></div><div class="image-text">6% - 8%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(230,45,0, .58)" class="image-stable"></div><div class="image-text">4% - 6%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(230,55,0, .5)" class="image-stable"></div><div class="image-text">2% - 4%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(230,65,0, .42)" class="image-stable"></div><div class="image-text">Under 2%</div>
+      </div>
+    </div>
+
+    <div class="mapvalue" id="expense-income">
+      <div class="image-total">
+        <div style="background: rgba(0,0,90, .95)" class="image-stable"></div><div class="image-text">Above 15%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0,0,110, .85)" class="image-stable"></div><div class="image-text">10% - 15%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0,0,150, .65)" class="image-stable"></div><div class="image-text">8% - 10%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0,0,160, .62)" class="image-stable"></div><div class="image-text">6% - 8%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0,0,180, .58)" class="image-stable"></div><div class="image-text">4% - 6%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0,0,200, .5)" class="image-stable"></div><div class="image-text">2% - 4%</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0,0,220, .4)" class="image-stable"></div><div class="image-text">Under 2%</div>
+      </div>
+    </div>
+
+
+    <div class="mapvalue" id="expense">
+      <div class="image-total">
+        <div style="background: rgba(0, 60, 0, .98)" class="image-stable"></div><div class="image-text">Above $30,000</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0, 70, 0, .94)" class="image-stable"></div><div class="image-text">$26,000 - $30,000</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0, 80, 0, .9)" class="image-stable"></div><div class="image-text">$22,000 - $26,000</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0, 90, 0, .86)" class="image-stable"></div><div class="image-text">$18,000 - $22,000</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0, 130, 0, .80)" class="image-stable"></div><div class="image-text">$14,000 - $18,000</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0, 170, 0, .7)" class="image-stable"></div><div class="image-text">$10,000 - $14,000</div>
+      </div>
+            <div class="image-total">
+        <div style="background: rgba(0, 210, 0, .5)" class="image-stable"></div><div class="image-text">Under $10,000</div>
+      </div>
+    </div>
+
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    .image-total{
+      margin: 5px 0px;
+    }
+    .image-stable{
+      width: 13px;
+      height: 13px;
+      display: inline-block;
+    }
+    .image-text{
+          display: inline-block;
+    position: absolute;
+    width: 130px;
+    margin-left: 20px;
+    }
+    .mapchange{
+      position: absolute;
+      z-index: 5;
+    }
+    .mapchange2{
+      position: absolute;
+      z-index: 5;
+      left: 250px
+    }
+    .mapboxgl-ctrl-attrib{
+      display: none;
+    }
+    .mapvalue{
+    position: absolute;
+    z-index: 5;
+    bottom: 70px;
+    right: 800px;
+    background: #fff;
+    padding: 0px 7px;
+    width: 130px;
+    border-radius: 5px;
+    font-size: 12px;
+    }
+    .mapchange3{
+      position: absolute;
+      z-index: 5;
+      left: 150px
+    }
+    .mapchange4{
+            position: absolute;
+      z-index: 5;
+      left: 450px
+    }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='map'></div>
+    <script>
+		mapboxgl.accessToken = 'pk.eyJ1Ijoic25pa2FlaW4iLCJhIjoiY2s1eWNpcWxrMDJvbzNtcDdyb3puNTVrMCJ9.t-VFWsbpRo--tRSLgLa9ng';
+		var map = new mapboxgl.Map({
+		  container: 'map',
+		  style: 'mapbox://styles/mapbox/streets-v10',
+		  center: [-98.5795, 39.8283], // starting position
+		  zoom: 2.2
+		});
+    function valuechanged(){
+      document.getElementById( 'bottom-earners' ).style.display = 'none';
+      document.getElementById( 'expense' ).style.display = 'none';
+      document.getElementById( 'expense-income' ).style.display = 'block';
+
+      if(twofive){
+      values = main_array.map((e) => {
+        // if(!e["2005"])   return {"type": "Feature", "geometry": e.geometry, "properties": {"color": "rgba(0,0,220, .4)"} } 
+        if(!e["2020"])   return {"type": "Feature", "geometry": e.geometry, "properties": {"color": "rgba(230, 0, 0, .4)"} } 
+
+        let color = value_color(e["2020"].bottom_tier)
+        return {"type": "Feature", "geometry": e.geometry, "properties": {"bottom_tier": e["2020"].bottom_tier, "top_tier": e["2020"].top_tier, color} } 
+      })
+      twofive = false;
+          if (map.getSource('test')){
+      map.getSource('test').setData({
+        'type': 'FeatureCollection',
+        'features': values
+        });
+
+      }
+      }else{
+
+      values = main_array.map((e) => {
+        if(!e["2005"])   return {"type": "Feature", "geometry": e.geometry, "properties": {"color": value_color(e["2020"].bottom_tier)} } 
+
+        let color = value_color(e["2005"].bottom_tier)
+        return {"type": "Feature", "geometry": e.geometry, "properties": {"bottom_tier": e["2005"].bottom_tier, "top_tier": e["2005"].top_tier, color} } 
+      })
+      if (map.getSource('test')){
+      map.getSource('test').setData({
+        'type': 'FeatureCollection',
+        'features': values
+        });
+
+      }
+      twofive = true;
+      }
+    }
+    function valuechangedincome(){
+      document.getElementById( 'bottom-earners' ).style.display = 'block';
+      document.getElementById( 'expense' ).style.display = 'none';
+      document.getElementById( 'expense-income' ).style.display = 'none';
+
+      values = main_array.map((e) => {
+        let expense = e["exp_mor_2018"] * 12 * 1;
+        let total = 0;
+        let main = 0
+        e["2020"].arr.map((e, index) => {
+          if(income[index] <= expense) main += e
+
+          total += e
+        })
+
+        let final_value = Math.round((main / total) * 100) / 100
+        let color = value_color_income_debt(final_value) 
+
+        return {"type": "Feature", "geometry": e.geometry, "properties": {color} } 
+      })
+      if (map.getSource('test')){
+      map.getSource('test').setData({
+        'type': 'FeatureCollection',
+        'features': values
+        });
+
+      }
+    }
+        function valuechangedincome_exp(){
+      document.getElementById( 'bottom-earners' ).style.display = 'block';
+      document.getElementById( 'expense' ).style.display = 'none';
+      document.getElementById( 'expense-income' ).style.display = 'none';
+
+      values = main_array.map((e) => {
+        let expense = e["exp_2018"] * 12 * 1;
+        let total = 0;
+        let main = 0
+        e["2020"].arr.map((e, index) => {
+          if(income[index] <= expense) main += e
+
+          total += e
+        })
+
+        let final_value = Math.round((main / total) * 100) / 100
+        let color = value_color_income_debt(final_value) 
+
+        return {"type": "Feature", "geometry": e.geometry, "properties": {color} } 
+      })
+      if (map.getSource('test')){
+      map.getSource('test').setData({
+        'type': 'FeatureCollection',
+        'features': values
+        });
+
+      }
+    }
+    var income = [0, 10000, 15000, 20000, 25000, 30000, 38000, 45000, 50000, 55000, 60000, 75000, 100000, 125000, 150000, 200000]
+    function value_color(values){
+      if(values > .15) return "rgba(0,0,90, .95)"
+      if(values > .13) return "rgba(0,0,100, .9)"
+      if(values > .12) return "rgba(0,0,110, .85)"
+      if(values > .11) return "rgba(0,0,120, .8)"
+      if(values > .10) return "rgba(0,0,130, .75)"
+      if(values > .9) return "rgba(0,0,140, .7)"
+      if(values > .8) return "rgba(0,0,150, .65)"
+      if(values > .7) return "rgba(0,0,160, .62)"
+      if(values > .6) return "rgba(0,0,170, .6)"
+      if(values > .5) return "rgba(0,0,180, .58)"
+      if(values > .4) return "rgba(0,0,190, .55)"
+      if(values > .3) return "rgba(0,0,200, .5)"
+      if(values > .2) return "rgba(0,0,210, .45)"
+      if(values > .1) return "rgba(0,0,220, .42)"
+      return "rgba(0,0,220, .4)"
+    }
+
+    function value_color_income_debt(values){
+      if(values > .15) return "rgba(230,0,0, .95)"
+      if(values > .13) return "rgba(230,5,0, .9)"
+      if(values > .12) return "rgba(230,10,0, .85)"
+      if(values > .11) return "rgba(230,15,0, .8)"
+      if(values > .10) return "rgba(230,20,0, .75)"
+      if(values > .9) return "rgba(230,25,0, .7)"
+      if(values > .8) return "rgba(230,30,0, .65)"
+      if(values > .7) return "rgba(230,35,0, .62)"
+      if(values > .6) return "rgba(230,40,0, .6)"
+      if(values > .5) return "rgba(230,45,0, .58)"
+      if(values > .4) return "rgba(230,50,0,.55)"
+      if(values > .3) return "rgba(230,55,0, .5)"
+      if(values > .2) return "rgba(230,60,0, .45)"
+      if(values > .1) return "rgba(230,65,0, .42)"
+      return "rgba(230,70,0, .4)"
+
+    }
+
+    function value_color_expense_each(values){
+      if(values > 2400) return "rgba(0, 60, 0, .98)"
+      if(values > 2300) return "rgba(0, 65, 0, .96)"
+      if(values > 2200) return "rgba(0, 70, 0, .94)"
+      if(values > 2100) return "rgba(0, 75, 0, .92)"
+      if(values > 2000) return "rgba(0, 80, 0, .9)"
+      if(values > 1900) return "rgba(0, 85, 0, .88)"
+      if(values > 1800) return  "rgba(0, 90, 0, .86)"
+      if(values > 1700) return  "rgba(0, 100, 0, .85)"
+      if(values > 1600) return  "rgba(0, 110, 0, .84)"
+      if(values > 1500) return  "rgba(0, 120, 0, .82)"
+      if(values > 1400) return  "rgba(0, 130, 0, .80)"
+      if(values > 1300) return  "rgba(0, 140, 0, .78)"
+      if(values > 1200) return  "rgba(0, 150, 0, .75)"
+      if(values > 1100) return  "rgba(0, 160, 0, .73)"
+      if(values > 1000) return  "rgba(0, 170, 0, .7)"
+      if(values > 900) return  "rgba(0, 180, 0, .68)"
+      if(values > 800) return  "rgba(0, 190, 0, .65)"
+      if(values > 700) return  "rgba(0, 200, 0, .62)"
+      if(values > 600) return  "rgba(0, 210, 0, .6)"
+      if(values > 500) return  "rgba(0, 210, 0, .58)"
+      if(values > 400) return  "rgba(0, 210, 0, .55)"
+      if(values > 300) return  "rgba(0, 210, 0, .5)"
+
+      return "rgba(0, 210, 0, .35)"
+
+
+
+    }
+    var twofive = true
+    var main_array = []
+		async function add_value(){
+      document.getElementById( 'bottom-earners' ).style.display = 'none';
+      document.getElementById( 'expense' ).style.display = 'block';
+      document.getElementById( 'expense-income' ).style.display = 'none';
+			var values = await fetch("./Family_income_video.json")
+      var value_data = await values.json() 
+
+      values = value_data.map((e) => {
+        // if(!e["2005"])   return {"type": "Feature", "geometry": e.geometry, "properties": {"color": value_color(e["2020"].bottom_tier)} } 
+        
+        // if(!e["exp_2007"])   return {"type": "Feature", "geometry": e.geometry, "properties": {"color":"transparent"} } 
+
+        // let color = value_color(e["2005"].bottom_tier)
+        let color = value_color_expense_each(e["exp_2018"]) 
+
+        // return {"type": "Feature", "geometry": e.geometry, "properties": {"bottom_tier": e["2005"].bottom_tier, "top_tier": e["2020"].top_tier, color} } 
+        return {"type": "Feature", "geometry": e.geometry, "properties": { "top_tier": e["2020"].top_tier, color} } 
+      })
+      main_array = value_data
+      console.log(values)
+                map.addSource("test", {
+        'type': 'geojson',
+        'data': {
+          'type': 'FeatureCollection',
+          'features': values
+        }
+          })
+
+          map.addLayer({
+            'id': "test",
+            'type': 'fill',
+            'source': "test",
+            'layout': {},
+            'paint': {
+              'fill-color': {
+                type: 'identity',
+                property: 'color',
+            },
+            'fill-opacity': 0.85,
+            }
+            });
+
+		}
+    async function add_markers() {
+            var values = await fetch("./Population_cities.json")
+      var value_data_pop = await values.json()
+      value_data_pop.map((e) => {
+        var loc = e.Location.split("/ ")[2];
+        loc = loc.split("(")[0]
+        loc = loc.split("; ")
+        var coordinates = [loc[1], loc[0]]
+        console.log(coordinates)
+        var marker = new mapboxgl.Marker().setLngLat(coordinates)
+    .addTo(map);
+      })
+    }
+		add_value()
+
+
+    </script>
+  </body>
+</html>
